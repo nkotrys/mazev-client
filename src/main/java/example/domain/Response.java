@@ -23,7 +23,7 @@ public sealed interface Response {
     record StateCave(Cave cave) implements Response {
     }
 
-    record StateLocations(Collection<EntityLocation> locations) implements Response {
+    record StateLocations(Collection<EntityLocation> entityLocations) implements Response {
         public record EntityLocation(Entity entity, Location location) {
         }
     }

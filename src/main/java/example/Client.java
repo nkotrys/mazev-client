@@ -1,9 +1,5 @@
 package example;
 
-import java.io.*;
-import java.net.*;
-import java.util.Objects;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.domain.Request;
 import example.domain.Response;
@@ -11,6 +7,10 @@ import example.domain.game.Cave;
 import example.domain.game.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.Socket;
+import java.util.Collection;
 
 public class Client {
     private static final String HOST = "localhost";
@@ -44,6 +44,17 @@ public class Client {
                     return;
                 }
 
+            }
+
+            Cave cave;
+            Collection<Response.StateLocations.EntityLocation> entityLocations;
+
+            while (!Thread.currentThread().isInterrupted()) {
+                final var line = reader.readLine();
+                if (line == null) {
+                    break;
+                }
+
                 final var response = objectMapper.readValue(line, Response.class);
                 switch (response) {
                     case Response.Authorized authorized -> {
@@ -54,50 +65,20 @@ public class Client {
                         return;
                     }
                     case Response.StateCave stateCave -> {
-                        logger.error("unexpected response: {}", stateCave);
-                        return;
+                        cave = stateCave.cave();
+                        logger.info("cave: {}", cave);
                     }
                     case Response.StateLocations stateLocations -> {
-                        logger.error("unexpected response: {}", stateLocations);
-                        return;
+                        entityLocations = stateLocations.entityLocations();
+                        logger.info("entityLocations: {}", entityLocations);
+
+                        final var cmd = new Request.Command(Entity.Player.Direction.Up);
+                        final var cmdJson = objectMapper.writeValueAsString(cmd);
+                        writer.write(cmdJson);
+                        writer.newLine();
+                        writer.flush();
+                        logger.info("Sent command: {}", cmd);
                     }
-                }
-            }
-
-            Cave cave;
-
-            {
-                final var line = reader.readLine();
-                if (line == null) {
-                    return;
-                }
-
-                final var response = objectMapper.readValue(line, Response.class);
-                if (Objects.requireNonNull(response) instanceof Response.StateCave stateCave) {
-                    cave = stateCave.cave();
-                } else {
-                    logger.error("unexpected response: {}", response);
-                    return;
-                }
-            }
-
-            while (!Thread.currentThread().isInterrupted()) {
-                final var line = reader.readLine();
-                if (line == null) {
-                    break;
-                }
-
-                final var response = objectMapper.readValue(line, Response.class);
-                logger.info("Response: {}", response);
-                if (Objects.requireNonNull(response) instanceof Response.StateLocations) {
-                    final var cmd = new Request.Command(Entity.Player.Direction.Up);
-                    final var cmdJson = objectMapper.writeValueAsString(cmd);
-                    writer.write(cmdJson);
-                    writer.newLine();
-                    writer.flush();
-                    logger.info("Sent command: {}", cmd);
-                } else {
-                    logger.error("Unexpected response: {}", response);
                 }
             }
         } catch (IOException e) {
