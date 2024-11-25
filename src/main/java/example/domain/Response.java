@@ -7,7 +7,6 @@ import example.domain.game.Entity;
 import example.domain.game.Location;
 
 import java.util.Collection;
-
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
