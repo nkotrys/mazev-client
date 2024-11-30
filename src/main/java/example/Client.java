@@ -47,6 +47,7 @@ public class Client {
             }
 
             Cave cave;
+            Entity.Player player;
             Collection<Response.StateLocations.EntityLocation> entityLocations;
 
             while (!Thread.currentThread().isInterrupted()) {
@@ -58,6 +59,7 @@ public class Client {
                 final var response = objectMapper.readValue(line, Response.class);
                 switch (response) {
                     case Response.Authorized authorized -> {
+                        player = authorized.player();
                         logger.info("authorized: {}", authorized);
                     }
                     case Response.Unauthorized unauthorized -> {
