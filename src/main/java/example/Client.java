@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import example.domain.Request;
 import example.domain.Response;
 import example.domain.game.Cave;
-import example.domain.game.Entity;
+import example.domain.game.Direction;
+import example.domain.game.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +48,9 @@ public class Client {
             }
 
             Cave cave;
-            Entity.Player player;
-            Collection<Response.StateLocations.EntityLocation> entityLocations;
+            Player player;
+            Collection<Response.StateLocations.ItemLocation> itemLocations;
+            Collection<Response.StateLocations.PlayerLocation> playerLocations;
 
             while (!Thread.currentThread().isInterrupted()) {
                 final var line = reader.readLine();
@@ -59,7 +61,7 @@ public class Client {
                 final var response = objectMapper.readValue(line, Response.class);
                 switch (response) {
                     case Response.Authorized authorized -> {
-                        player = authorized.player();
+                        player = authorized.humanPlayer();
                         logger.info("authorized: {}", authorized);
                     }
                     case Response.Unauthorized unauthorized -> {
@@ -71,10 +73,12 @@ public class Client {
                         logger.info("cave: {}", cave);
                     }
                     case Response.StateLocations stateLocations -> {
-                        entityLocations = stateLocations.entityLocations();
-                        logger.info("entityLocations: {}", entityLocations);
+                        itemLocations = stateLocations.itemLocations();
+                        playerLocations = stateLocations.playerLocations();
+                        logger.info("itemLocations: {}", itemLocations);
+                        logger.info("playerLocations: {}", playerLocations);
 
-                        final var cmd = new Request.Command(Entity.Player.Direction.Up);
+                        final var cmd = new Request.Command(Direction.Up);
                         final var cmdJson = objectMapper.writeValueAsString(cmd);
                         writer.write(cmdJson);
                         writer.newLine();
