@@ -14,7 +14,8 @@ import java.net.Socket;
 import java.util.Collection;
 
 public class Client {
-    private static final String HOST = "34.44.208.210";
+//    private static final String HOST = "34.44.208.210";
+    private static final String HOST = "localhost";
     private static final int PORT = 8080;
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(Client.class);
