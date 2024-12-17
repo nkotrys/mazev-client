@@ -43,8 +43,8 @@ public class Client {
                 logger.info("Sent command: {}", json);
             }
 
-            Cave cave;
-            Player player;
+            Cave cave = null;
+            Player player = null;
             Collection<Response.StateLocations.ItemLocation> itemLocations;
             Collection<Response.StateLocations.PlayerLocation> playerLocations;
             char[][] map = new char[0][0];
@@ -89,12 +89,17 @@ public class Client {
                         logger.info("playerLocations: {}", playerLocations);
                         for (int i = 0; i < map.length; i++) {
                             for (int j = 0; j < map[0].length; j++) {
-                                var item = isItem(itemLocations,i,j);
-                                if(item != ' ' ){
-                                    map[i][j] = item;
-                                }
-                                else if(isPlayer(playerLocations,i,j) ){
-                                    map[i][j] = 'P';
+                                if(map[i][j] != 'x'){
+                                    var item = isItem(itemLocations,i,j);
+                                    if(item != ' ' ){
+                                        map[i][j] = item;
+                                    }
+                                    else if(isPlayer(playerLocations,i,j, player) != ' '){
+                                        map[i][j] = isPlayer(playerLocations,i,j, player);
+                                    }
+                                    else{
+                                        map[i][j] = ' ';
+                                    }
                                 }
                             }
                         }
@@ -104,10 +109,9 @@ public class Client {
                                 }
                             System.out.println();
                             }
+                        Location myLocation = myPlayerLocation(playerLocations,player);
 
-
-
-                        final var cmd = new Request.Command(Direction.Up);
+                        final var cmd =  new Request.Command(dijkstry(map,myLocation, cave.rows(), cave.columns())); //new Request.Command(Direction.Up);
                         final var cmdJson = objectMapper.writeValueAsString(cmd);
                         writer.write(cmdJson);
                         writer.newLine();
@@ -141,50 +145,87 @@ public class Client {
         return ' ';
     }
 
-    public boolean isPlayer(Collection<Response.StateLocations.PlayerLocation> playerLocation ,int row, int column){
+    public char isPlayer(Collection<Response.StateLocations.PlayerLocation> playerLocation ,int row, int column, Player myPlayer){
         Location position;
-        for(Response.StateLocations.PlayerLocation player : playerLocation){
-            position = player.location();
+        for(Response.StateLocations.PlayerLocation singlePlayer : playerLocation){
+            position = singlePlayer.location();
             if(position.row() == row && position.column() == column){
-                return true;
+                if(singlePlayer.entity().equals(myPlayer)){
+                    return 'O';
+                }
+                return 'P';
             }
         }
-        return false;
+        return ' ';
     }
 
-    public void dijkstry(char[][] map, Location startLocation){
+    public Location myPlayerLocation(Collection<Response.StateLocations.PlayerLocation> playerLocation, Player myPlayer){
+        Location position = null;
+        for(Response.StateLocations.PlayerLocation singlePlayer : playerLocation) {
+            position = singlePlayer.location();
+            if (singlePlayer.entity().equals(myPlayer)) {
+                return position;
+            }
+        }
+        return position;
+    }
+
+    public Direction dijkstry(char[][] map, Location startLocation, int caveRows, int caveColumns){
         int index = 0;
         List<Location> positionList = new ArrayList<Location>();
         positionList.add(startLocation);
         List<Integer> previousIndex = new ArrayList<Integer>();
         previousIndex.add(-1);
+        Location finalLocation = null;
         boolean isGold = false;
         List<Location> neighbors = new ArrayList<>();
         List<Location> foundLocations = new ArrayList<>();
-        foundLocations.add(startLocation);
+        int backIndex = -1;
+        //list of already found locations
+        //foundLocations.add(startLocation);
 
         while(!isGold){
             neighbors = getNeighbors(positionList.get(index));
             outer: for(Location currentLocation : neighbors){
-                if(!foundLocations.contains(currentLocation)) {
+                //if(!foundLocations.contains(currentLocation)) {
+                if(!positionList.contains(currentLocation) && currentLocation.row() < caveRows && 0 < currentLocation.row()  && currentLocation.column() < caveColumns && 0 < currentLocation.column() ) {
                     switch (map[currentLocation.row()][currentLocation.column()]) {
+
                         case ' ' -> {
                             addLocation(currentLocation, index, positionList, previousIndex, foundLocations);
+                            System.out.println("empty");
+                            System.out.println(isGold);
                         }
                         case 'G' -> {
+                            System.out.println("gold");
+                            System.out.println(isGold);
+                            backIndex = index;
+                            finalLocation = currentLocation;
                             isGold = true;
                             break outer;
                         }
                         case 'x' -> {
+                            System.out.println("x");
+                            System.out.println(isGold);
+                            addLocation(currentLocation, -1, positionList, previousIndex, foundLocations);
                             break;
                         }
                     }
                 }
+                index++;
             }
         }
-
-
-
+        if(backIndex == 0){
+            return getDirection(startLocation,finalLocation);
+        }
+        else{
+            while(backIndex != 0){
+                index = backIndex;
+                backIndex = previousIndex.get(index);
+            }
+        }
+        finalLocation = positionList.get(index);
+        return getDirection(startLocation,finalLocation);
 
     }
     public List<Location> getNeighbors(Location startLocation){
@@ -199,7 +240,22 @@ public class Client {
     public void addLocation(Location locationToAdd, Integer previousLocationIndex, List<Location> positionList, List<Integer> previousIndex, List<Location> foundLocations){
         positionList.add(locationToAdd);
         previousIndex.add(previousLocationIndex);
-        foundLocations.add(locationToAdd);
+        //foundLocations.add(locationToAdd);
+
+    }
+    public Direction getDirection(Location startLocation, Location endLocation){
+        if(endLocation.column() == startLocation.column() + 1){
+            return Direction.Right;
+        }
+        else if(endLocation.column() == startLocation.column() - 1){
+            return Direction.Left;
+        }
+        else if(endLocation.row() == startLocation.row() - 1){
+            return Direction.Down;
+        }
+        else{
+            return Direction.Up;
+        }
 
     }
 
