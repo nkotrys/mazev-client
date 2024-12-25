@@ -109,7 +109,7 @@ public class Client {
                         Location myLocation = MapRender.myPlayerLocation(playerLocations,player);
                         System.out.println(myLocation.row());
                         System.out.println(myLocation.column());
-                        final var cmd =  new Request.Command(Strategy.dijkstry(map,myLocation)); //new Request.Command(Direction.Up);
+                        final var cmd =  new Request.Command(Strategy.dijkstry(map,myLocation,playerLocations)); //new Request.Command(Direction.Up);
                         final var cmdJson = objectMapper.writeValueAsString(cmd);
                         writer.write(cmdJson);
                         writer.newLine();
