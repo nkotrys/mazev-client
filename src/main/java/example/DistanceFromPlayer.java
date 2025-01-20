@@ -11,7 +11,7 @@ import static example.SubFunctions.getNeighbors;
 public class DistanceFromPlayer {
     public static int getDistanceFromPlayer(char[][] map, Location goldLocation) {
         int index = 0;
-        //two lists initialization - first with Locations, second with index of previous element (the one from we came here
+        //two lists initialization - first with Locations, second with distance
         List<Location> positionList = new ArrayList<>();
         List<Integer> distance = new ArrayList<>();
         positionList.add(goldLocation);
@@ -20,7 +20,7 @@ public class DistanceFromPlayer {
 
         boolean isPlayer = false;
 
-        while (!isPlayer) { //break if gold found or no more moves are possible
+        while (!isPlayer) { //break if Player found
             Location currentLocation = positionList.get(index);
             List<Location> neighbors = getNeighbors(currentLocation, map);
 

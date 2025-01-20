@@ -15,11 +15,11 @@ public class Strategy {
     public static Direction dijkstry(char[][] map, Location startLocation, Collection<Response.StateLocations.PlayerLocation> playerLocations) {
         int index = 0;
         int backIndex = -1;
-        //two lists initialization - first with Locations, second with index of previous element (the one from we came here
+        //two lists initialization - first with Locations, second with index of previous element (the one from where we came here)
         List<Location> positionList = new ArrayList<>();
         List<Integer> previousIndex = new ArrayList<>();
         List<Integer> distance = new ArrayList<>();
-        List<Integer> numberOfGold = new ArrayList<>();
+        List<Integer> numberOfGold = new ArrayList<>();  //number of gold to could get in this move
         List<Integer> numberOfHealth = new ArrayList<>();
         positionList.add(startLocation);
         previousIndex.add(-1);
@@ -29,7 +29,7 @@ public class Strategy {
 
         Location finalLocation = null;
 
-        while (index < positionList.size()) { //break if gold found or no more moves are possible
+        while (index < positionList.size()) { //break if gold found or no more moves are possible - UPDATE when no more moves are possible
             Location currentLocation = positionList.get(index);
             List<Location> neighbors = getNeighbors(currentLocation, map);
 
@@ -49,11 +49,12 @@ public class Strategy {
                             previousIndex.add(index);
                             distance.add(distance.get(index) + 1);
                             numberOfHealth.add(numberOfHealth.get(index));
+                            //add gold only if my player is the nearest one
                             if(distance.get(index) + 1 < DistanceFromPlayer.getDistanceFromPlayer(map, neighbor)) {
                                 numberOfGold.add(numberOfGold.get(index)+1);
                             }
                             else{
-                                numberOfGold.add(0);  //CHECK
+                                numberOfGold.add(0);  //TODO: CHECK
                             }
                         }
                         case 'H' -> {
@@ -61,11 +62,12 @@ public class Strategy {
                             previousIndex.add(index);
                             distance.add(distance.get(index) + 1);
                             numberOfGold.add(numberOfGold.get(index));
+                            //add health only if my player is the nearest one
                             if(distance.get(index) + 1 < DistanceFromPlayer.getDistanceFromPlayer(map, neighbor)) {
                                 numberOfHealth.add(numberOfHealth.get(index)+1);
                             }
                             else{
-                                numberOfHealth.add(0);  //CHECK
+                                numberOfHealth.add(0);  //TODO: CHECK
                             }
                         }
                     }
@@ -74,6 +76,8 @@ public class Strategy {
             index++;
         }
 
+
+        //TODO: add some weight for health and also consider here
         int max = numberOfGold.getFirst();
         int maxIndex = 0;
         index = 0;
