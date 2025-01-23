@@ -16,6 +16,7 @@ public class MapRender {
                 switch (item.entity()) {
                     case Item.Gold ignored -> {
                         return 'G';
+                        //return (char) SubFunctions.getGoldValue(itemLocation,position.row(),position.column() );
                     }
                     case  Item.Health ignored -> {
                         return 'H';
@@ -34,7 +35,10 @@ public class MapRender {
                 if(singlePlayer.entity().equals(myPlayer)){
                     return 'O';
                 }
-                return 'P';
+                else if(singlePlayer.entity() instanceof Player.HumanPlayer){
+                    return 'P';
+                }
+                return 'D';
             }
         }
         return ' ';

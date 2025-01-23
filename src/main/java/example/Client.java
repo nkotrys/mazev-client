@@ -90,9 +90,11 @@ public class Client {
                                     var item = MapRender.isItem(itemLocations,i,j);
                                     if(item != ' ' ){
                                         map[i][j] = item;
+                                        //System.out.println("row: " + i + ", column: " + j + " " + SubFunctions.getItemValue(itemLocations,i,j));
                                     }
                                     else if(MapRender.isPlayer(playerLocations,i,j, player) != ' '){
                                         map[i][j] = MapRender.isPlayer(playerLocations,i,j, player);
+
                                     }
                                     else{
                                         map[i][j] = ' ';
@@ -109,7 +111,7 @@ public class Client {
                         Location myLocation = MapRender.myPlayerLocation(playerLocations,player);
                         System.out.println(myLocation.row());
                         System.out.println(myLocation.column());
-                        final var cmd =  new Request.Command(Strategy.dijkstry(map,myLocation,playerLocations));
+                        final var cmd =  new Request.Command(Strategy.dijkstry(map,myLocation,itemLocations));
                         //final var cmd = new Request.Command(Direction.Up);
                         final var cmdJson = objectMapper.writeValueAsString(cmd);
                         writer.write(cmdJson);

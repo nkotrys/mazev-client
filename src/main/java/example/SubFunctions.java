@@ -1,9 +1,12 @@
 package example;
 
+import example.domain.Response;
 import example.domain.game.Direction;
+import example.domain.game.Item;
 import example.domain.game.Location;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SubFunctions {
@@ -43,5 +46,21 @@ public class SubFunctions {
             return Direction.Down;
         }
 
+    }
+
+    public static int getItemValue(Collection<Response.StateLocations.ItemLocation> itemLocation, int row, int column){
+        for (Response.StateLocations.ItemLocation item :itemLocation) {
+            Item entity = item.entity();
+            Location location = item.location();
+
+            // Check if the entity is Gold and the location matches
+            if (entity instanceof Item.Gold gold && location.row() == row && location.column() == column) {
+                return gold.value();
+            }
+            else if (entity instanceof Item.Health health && location.row() == row && location.column() == column) {
+                return health.value();
+            }
+        }
+        return 0;
     }
 }

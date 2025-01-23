@@ -12,7 +12,7 @@ import static example.SubFunctions.getDirection;
 import static example.SubFunctions.getNeighbors;
 
 public class Strategy {
-    public static Direction dijkstry(char[][] map, Location startLocation, Collection<Response.StateLocations.PlayerLocation> playerLocations) {
+    public static Direction dijkstry(char[][] map, Location startLocation, Collection<Response.StateLocations.ItemLocation> itemLocations) {
         int index = 0;
         int backIndex = -1;
         //two lists initialization - first with Locations, second with index of previous element (the one from where we came here)
@@ -51,10 +51,13 @@ public class Strategy {
                             numberOfHealth.add(numberOfHealth.get(index));
                             //add gold only if my player is the nearest one
                             if(distance.get(index) + 1 < DistanceFromPlayer.getDistanceFromPlayer(map, neighbor)) {
-                                numberOfGold.add(numberOfGold.get(index)+1);
+                                //numberOfGold.add(numberOfGold.get(index)+1);
+                                numberOfGold.add(numberOfGold.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
                             }
                             else{
-                                numberOfGold.add(0);  //TODO: CHECK
+                                //numberOfGold.add(0);  //TODO: CHECK
+                                numberOfGold.add(numberOfGold.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
+
                             }
                         }
                         case 'H' -> {
@@ -64,7 +67,8 @@ public class Strategy {
                             numberOfGold.add(numberOfGold.get(index));
                             //add health only if my player is the nearest one
                             if(distance.get(index) + 1 < DistanceFromPlayer.getDistanceFromPlayer(map, neighbor)) {
-                                numberOfHealth.add(numberOfHealth.get(index)+1);
+                                //numberOfHealth.add(numberOfHealth.get(index)+1);
+                                numberOfHealth.add(numberOfHealth.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
                             }
                             else{
                                 numberOfHealth.add(0);  //TODO: CHECK
@@ -76,7 +80,9 @@ public class Strategy {
             index++;
         }
 
-
+        for (int i = 0; i < (long) numberOfGold.size(); i++) {
+            System.out.print(numberOfGold.get(i)+", ");
+        }
         //TODO: add some weight for health and also consider here
         int max = numberOfGold.getFirst();
         int maxIndex = 0;
@@ -89,7 +95,9 @@ public class Strategy {
             index++;
         }
         if(maxIndex == 0){
-            for (Integer x : numberOfGold) {
+            index = 0;
+            max = numberOfHealth.getFirst();
+            for (Integer x : numberOfHealth) {
                 if (x > max) {
                     max = x;
                     maxIndex = index;
@@ -97,7 +105,7 @@ public class Strategy {
                 index++;
             }
         }
-        if (maxIndex == 0){//TODO
+        if (maxIndex == 0){//TODO:
             return null;
         }
         backIndex = previousIndex.get(maxIndex);
