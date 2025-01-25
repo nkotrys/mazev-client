@@ -31,7 +31,8 @@ public class Strategy {
 
         while (index < positionList.size()) { //break if gold found or no more moves are possible - UPDATE when no more moves are possible
             Location currentLocation = positionList.get(index);
-            List<Location> neighbors = getNeighbors(currentLocation, map);
+            List<Location> neighbors = getNeighbors(currentLocation, map, index);
+
 
             for (Location neighbor : neighbors) {
                 if(!positionList.contains(neighbor)) {
@@ -105,7 +106,7 @@ public class Strategy {
                 index++;
             }
         }
-        if (maxIndex == 0){//TODO:
+        if (maxIndex == 0){//TODO: go to center
             return null;
         }
         backIndex = previousIndex.get(maxIndex);

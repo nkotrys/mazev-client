@@ -10,8 +10,33 @@ import java.util.Collection;
 import java.util.List;
 
 public class SubFunctions {
-    public static List<Location> getNeighbors(Location startLocation, char[][] map){
+    public static List<Location> getNeighbors(Location startLocation, char[][] map, int skipChecking){
         List<Location> neighboursLocations = new ArrayList<>();
+
+        if(skipChecking == 0){
+            Location currentLocation = new Location(startLocation.row(),startLocation.column()+1);
+            if(map[currentLocation.row()][currentLocation.column()] !='x' && map[currentLocation.row()][currentLocation.column()+1] != 'P'
+            && map[currentLocation.row()-1][currentLocation.column()] != 'P' &&  map[currentLocation.row()+1][currentLocation.column()] != 'P' ){
+                neighboursLocations.add(currentLocation);
+            }
+            currentLocation = new Location(startLocation.row(),startLocation.column()-1);
+            if(map[currentLocation.row()][currentLocation.column()] !='x' && map[currentLocation.row()][currentLocation.column()-1] != 'P'
+                    && map[currentLocation.row()-1][currentLocation.column()] != 'P' &&  map[currentLocation.row()+1][currentLocation.column()] != 'P' ){
+                neighboursLocations.add(currentLocation);
+            }
+            currentLocation = new Location(startLocation.row()+1,startLocation.column());
+            if(map[currentLocation.row()][currentLocation.column()] !='x' && map[currentLocation.row()][currentLocation.column()+1] != 'P'
+                    && map[currentLocation.row()][currentLocation.column()-1] != 'P' &&  map[currentLocation.row()+1][currentLocation.column()] != 'P' ){
+                neighboursLocations.add(currentLocation);
+            }
+            currentLocation = new Location(startLocation.row()-1,startLocation.column());
+            if(map[currentLocation.row()][currentLocation.column()] !='x' && map[currentLocation.row()][currentLocation.column()+1] != 'P'
+                    && map[currentLocation.row()-1][currentLocation.column()] != 'P' &&  map[currentLocation.row()][currentLocation.column()-1] != 'P' ){
+                neighboursLocations.add(currentLocation);
+            }
+            return neighboursLocations;
+        }
+
         Location currentLocation = new Location(startLocation.row(),startLocation.column()+1);
         if(map[currentLocation.row()][currentLocation.column()] !='x'){
             neighboursLocations.add(currentLocation);

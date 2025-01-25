@@ -22,7 +22,7 @@ public class DistanceFromPlayer {
 
         while (!isPlayer) { //break if Player found
             Location currentLocation = positionList.get(index);
-            List<Location> neighbors = getNeighbors(currentLocation, map);
+            List<Location> neighbors = getNeighbors(currentLocation, map, 1);
 
             for (Location neighbor : neighbors) {
                 if(!positionList.contains(neighbor)) {
