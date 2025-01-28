@@ -84,6 +84,10 @@ public class Strategy {
         for (int i = 0; i < (long) numberOfGold.size(); i++) {
             System.out.print(numberOfGold.get(i)+", ");
         }
+        System.out.println("");
+        for (int i = 0; i < (long) numberOfGold.size(); i++) {
+            System.out.print(distance.get(i)+", ");
+        }
         //TODO: add some weight for health and also consider here
         int max = numberOfGold.getFirst();
         int maxIndex = 0;
@@ -95,6 +99,8 @@ public class Strategy {
             }
             index++;
         }
+        System.out.println("");
+        System.out.println("goldDistance"+distance.get(maxIndex));
         if(maxIndex == 0){
             index = 0;
             max = numberOfHealth.getFirst();
@@ -105,7 +111,9 @@ public class Strategy {
                 }
                 index++;
             }
+            System.out.println("healthDistance"+distance.get(maxIndex));
         }
+        System.out.println("healthDistance"+distance.get(maxIndex));
         if (maxIndex == 0){//TODO: go to center
             return null;
         }
@@ -120,6 +128,10 @@ public class Strategy {
             while(backIndex != 0){
                 index = backIndex;
                 backIndex = previousIndex.get(index);
+                if(map[positionList.get(backIndex).row()][positionList.get(backIndex).column()] == 'G'){
+                    System.out.println("previousDistance"+distance.get(backIndex));
+                }
+
             }
         }
         finalLocation = positionList.get(index);

@@ -1,4 +1,60 @@
-xxxxxxxxx
-xO     xx
-x P G   x
-xxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x                xxxx         x         xxxx                               H                                                xx                       xxxxxxxxxxx
+x                 xxxx            x      x                                     x                                     xx     xxxx                    xxxxxxxxxxxx
+x                 xxxx                xx                                                                              x     xxx         x           xxxxxxxxxxxx
+x                 xx                                                     P                                               xxxxxxx       xx           xxxxxxxxxxxx
+x                                                                                                                       xxxxxxx                       xxxxxxxxxx
+x       xx                                                                                                            xxxxxx                     x  x xxxxxxxxxx
+x       xx  xxxx                                                                           P                            xxxx                          xxxxxxxxxx
+xx  x  xx         xxx                                                                                                     x                  xxx      xxxxxxxxxx
+x   xxxxx xx                           x                                                                                                     xxxx     xxxxxxxxxx
+x    xxxx xx                 x  xx                                                                                                   x     xxxxxxxxxxxxxxxxxxxxx
+x xxxxxxx    xxxx               xx x   x                                                                                                   xxxxxxxxxxxxxxxxxxxxx
+xx  xxxxxx   xxxx             xxx     xxxxx                                                                                             xxxxxxxxxxxxxxxxxxxxxxxx
+xx    xxxxxxxxxxx              xx     xxxxx                                                                                             xxxxxxxx xxxxxxxxxxx xxx
+x     xxxxxxxxxxxx                      xxxxx                                                                     G                     xxxxx x  xxxxxxxxxxx   x
+x     xxxxxxxxxxx                       xx xx x                                                     G                            x     xxxxxx x   xxxxxxxxx    x
+x       xxxxxxxxx                            x                               x                                               xxxx        xxxx       xxxxxxx    x
+x      xxxxxxxxxxxxx         x         G   x                                                                                 xxxx        xxxx xxxxx  xx   x    x
+x x    xxxxxxxxxxxxx               G       x   x                                                                             xxxx      xxxxxx xxxxx  xx   x x  x
+x   xxxxxxxxxxxxxxx            x           x                                    xx                                          xxxxxxx   xxxxxxx xxxxx  x    x    x
+x xxxxxxxxxxxxxxxxx         x             x x  P                               x                                           xxxxxxx    xxxx    xxxxx    x     G x
+x xxxxxxxxx x xxxxx                H                                      x    xx                            xxxxx          xxxx    x         Hxxxx    xx      x
+x    xxxxxx x xxxxx              Ox                                            x                                            xxx x               x     x x   x  x
+x     xxxxx                      x                                                                                          xxx                P               x
+x       x                          xx  x                                     x                    G                     x   xxx  x                       x     x
+x       xxx                 x          x                                                                                   xxxxx H                    xx       x
+x     x xxxx                xx      xx  x                                                                     H            xxxxx xx                   x        x
+xxxxxxx xxxx                        x    x                                                                                 xxxxx                               x
+xxxxxxx x                                                                                                                  xxxxxxxx                            x
+xxxxxxx         xx             xxx                                                                              H   x      xxxxxxx                             x
+xxxxxxxx       xxxx           xxxx                      Px                                                                xxxxxxxxx                            x
+xxxxxxx         xxxx       x  xxxx         G                                                                               xxxxxxxx         G                  x
+xxxxxxxxxxxx    xxx          xxxxx            G                                         G                                  x  xxxxx                            x
+xxxxxxxxxxxx   xxxx        x  xxxxxx                                                                           H     x        xxxxx           G          H     x
+xxxxxx xxxxxxxxxxxxx          xxxxxxx                                                         H P                    xx       xx                           x   x
+xxxxx   xxxxxxxxxxx           xxxxxxx                H                                                              xxx  P        xx                   x       x
+xxxxx   xxxxxxxxxxx           xxxxx                                         P                              x       xxxx     x                                  x
+xxxx     xxxxxxxx            xxxxxx               H                                                                x  x      x     x                     x     x
+xxxx     xxxxxxxx           xxxxxxx    xx      x                                                                          x   xx                             xxx
+xxx      xxxxxxx             xxxxxxxxxxxxx x                H           x                              x               xx                                x    xx
+x          xxxxx              xxxxxxxxxxxx x                            x              x                       x xxx   xxxxxxxx  xxx                   xx     xx
+x x     x  xxxxx          xx  xxxxxxxxxxx                         x                                           xxxxxxx  xxxx xxx      H                 xx     xx
+x   x x xx                    xxxxxxxxxx                         x             x              H                x   xxx xxx   H  xx                      x  x  xx
+x   x x                       xxxxx  xxx                                                                            x xxxxx xx   xx                       xxx  x
+x     x xxx    x              xxxxx  G                                                                           H     xxxx  x xxxx                       x    x
+xxxxxxxxxxxx                  xxx       x                   xxx                                               x        xxxxx xxxxxx x                     x    x
+xxxxxxxxxxxxxx  xxx          xx            x               xxxx  x  x           G                                     xxxxxx xxxxxxx                           x
+xxxxxxxxxxxxxxx                            xxx              xxx  x                                      x       xxx   xxx     xxxxx                            x
+xxxxxxxxxxxxx                              xx                                                           xxxx xxxxx  Hxxxx   xxxxxxx                       xx   x
+xxxxxxxxxxxxxx  x x                  x    xxx                    x                                         x xxxxx   xx      xxxx xx                 G     x   x
+xxxxxxxxxxxxxxxxxxx            x                         x                                                   xxxxxx   x xx    x                                x
+xxxxxxxxxxxxxxxxxxxxx          xx   x                   xx   xx                            x                  xxxxx     x                    x                 x
+xxxxxxxxxxxxxxxxxxxxxxxx      x  x                       xx                                x            G     xxxxx         x                 G        x xxx   x
+xxxxxxxxxxxxxxxxxxxxxx x      x  x                  H                          H                         x  xxxxxxxxx xx  x        x        x  x  x xxxxxx     x
+xxxxxxxxxxxxxxxxxxxxxx        x   x                           x      x  G                                x xxxxxxxxxxxxx                    x       xxxxxx     x
+xxxxxxxxxxxxxxxxxxxxxx                                       x                P                          x xxxxxxxxxxxxx          xxxx x    xxx   x xxxxxx  xxxx
+xxxxxxxxxxxxxxxxxxxxxxxxx   xx                     x                      xx       x                     x  xxxxxxxxxxxxx   x      xxx   H  xx      xxxxxx  xxxx
+xxxxxxxxxxxxxxxxxxxxxxxx   xxx                   x                x    xx xx      x                         xxxxxxxxxxxxx   xx     xxx       xx  x  xxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                   xxxxx           xxxxx xx                                      xxxxxxxxxx  xxxx    xxx    xxxxx      xxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
