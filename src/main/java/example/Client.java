@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Client {
 //    private static final String HOST = "35.208.184.138";
@@ -108,11 +109,14 @@ public class Client {
                                 }
                             System.out.println();
                             }
+                        System.out.println("Current Gold: "+stateLocations.gold());
+                        System.out.println("Current Health: "+stateLocations.health());
                         Location myLocation = MapRender.myPlayerLocation(playerLocations,player);
                         System.out.println(myLocation.row());
                         System.out.println(myLocation.column());
-                        final var cmd =  new Request.Command(Strategy.dijkstry(map,myLocation,itemLocations));
-                        //final var cmd = new Request.Command(Direction.Up);
+                        final var cmd =  new Request.Command(StrategyOld.dijkstry(map,myLocation));
+                        //final var cmd =  new Request.Command(Strategy.dijkstry(map,myLocation,itemLocations, stateLocations.health());
+                        //final var cmd = new Request.Command(Direction.Right);
                         final var cmdJson = objectMapper.writeValueAsString(cmd);
                         writer.write(cmdJson);
                         writer.newLine();

@@ -6,6 +6,7 @@ import example.domain.game.Location;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static example.SubFunctions.getDirection;
@@ -29,7 +30,7 @@ public class Strategy {
 
         Location finalLocation = null;
 
-        while (index < positionList.size()) { //break if gold found or no more moves are possible - UPDATE when no more moves are possible
+        while (index < positionList.size() && distance.getLast() < 90) { //break if gold found or no more moves are possible - UPDATE when no more moves are possible
             Location currentLocation = positionList.get(index);
             List<Location> neighbors = getNeighbors(currentLocation, map, index);
 
@@ -38,7 +39,7 @@ public class Strategy {
                 if(!positionList.contains(neighbor)) {
                     char cell = map[neighbor.row()][neighbor.column()];
                     switch (cell) {
-                        case ' ' -> {
+                        case ' '-> {
                             positionList.add(neighbor);
                             previousIndex.add(index);
                             distance.add(distance.get(index) + 1);
@@ -51,13 +52,13 @@ public class Strategy {
                             distance.add(distance.get(index) + 1);
                             numberOfHealth.add(numberOfHealth.get(index));
                             //add gold only if my player is the nearest one
-                            if(distance.get(index) + 1 < DistanceFromPlayer.getDistanceFromPlayer(map, neighbor)) {
+                            if(distance.get(index) + 1 < DistanceFromEntity.getDistanceFromEntity(map, neighbor,'P')) {
                                 //numberOfGold.add(numberOfGold.get(index)+1);
                                 numberOfGold.add(numberOfGold.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
                             }
                             else{
-                                //numberOfGold.add(0);  //TODO: CHECK
-                                numberOfGold.add(numberOfGold.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
+                                numberOfGold.add(1);
+                                //numberOfGold.add(numberOfGold.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
 
                             }
                         }
@@ -67,13 +68,15 @@ public class Strategy {
                             distance.add(distance.get(index) + 1);
                             numberOfGold.add(numberOfGold.get(index));
                             //add health only if my player is the nearest one
-                            if(distance.get(index) + 1 < DistanceFromPlayer.getDistanceFromPlayer(map, neighbor)) {
+                            if(distance.get(index) + 1 < DistanceFromEntity.getDistanceFromEntity(map, neighbor,'P')) {
                                 //numberOfHealth.add(numberOfHealth.get(index)+1);
                                 numberOfHealth.add(numberOfHealth.get(index)+SubFunctions.getItemValue(itemLocations, neighbor.row(), neighbor.column())); //TODO: testing
                             }
                             else{
-                                numberOfHealth.add(0);  //TODO: CHECK
+                                numberOfHealth.add(0);
                             }
+
+
                         }
                     }
                 }
@@ -81,44 +84,63 @@ public class Strategy {
             index++;
         }
 
-        for (int i = 0; i < (long) numberOfGold.size(); i++) {
+        /*for (int i = 0; i < (long) numberOfGold.size(); i++) {
             System.out.print(numberOfGold.get(i)+", ");
         }
         System.out.println("");
         for (int i = 0; i < (long) numberOfGold.size(); i++) {
             System.out.print(distance.get(i)+", ");
+        }*/
+
+        //no safe move
+        if(positionList.size() == 1) {
+            return null;
         }
-        //TODO: add some weight for health and also consider here
-        int max = numberOfGold.getFirst();
-        int maxIndex = 0;
+
+        int maxGold = numberOfGold.getFirst();
+        int maxIndexGold = 0;
+        int maxHealth = numberOfHealth.getFirst();
+        int maxIndexHealth = 0;
+
         index = 0;
         for (Integer x : numberOfGold) {
-            if (x > max) {
-                max = x;
-                maxIndex = index;
+            if (x > maxGold) {
+                maxGold = x;
+                maxIndexGold = index;
             }
             index++;
         }
-        System.out.println("");
-        System.out.println("goldDistance"+distance.get(maxIndex));
-        if(maxIndex == 0){
+        //System.out.println("");
+        //System.out.println("goldDistance"+distance.get(maxIndexGold));
+        if(maxGold < 2){
             index = 0;
-            max = numberOfHealth.getFirst();
+            maxHealth = numberOfHealth.getFirst();
             for (Integer x : numberOfHealth) {
-                if (x > max) {
-                    max = x;
-                    maxIndex = index;
+                if (x > maxHealth) {
+                    maxHealth = x;
+                    maxIndexHealth = index;
                 }
                 index++;
             }
-            System.out.println("healthDistance"+distance.get(maxIndex));
+            System.out.println("healthDistance"+distance.get(maxIndexHealth));
         }
-        System.out.println("healthDistance"+distance.get(maxIndex));
-        if (maxIndex == 0){//TODO: go to center
-            return null;
+        System.out.println("healthDistance"+distance.get(maxIndexHealth));
+
+        int maxIndex = 0;
+
+        if(maxGold < 2 && maxHealth > 1){
+            maxIndex = maxIndexHealth;
         }
+        else{
+            maxIndex = maxIndexGold;
+        }
+
+
         backIndex = previousIndex.get(maxIndex);
         finalLocation = positionList.get(maxIndex);
+        if(backIndex == -1){
+            return null;
+        }
         if(backIndex == 0){
             System.out.println("move" + getDirection(startLocation,finalLocation));
             return getDirection(startLocation,finalLocation);
@@ -128,9 +150,6 @@ public class Strategy {
             while(backIndex != 0){
                 index = backIndex;
                 backIndex = previousIndex.get(index);
-                if(map[positionList.get(backIndex).row()][positionList.get(backIndex).column()] == 'G'){
-                    System.out.println("previousDistance"+distance.get(backIndex));
-                }
 
             }
         }
