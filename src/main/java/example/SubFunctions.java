@@ -58,18 +58,17 @@ public class SubFunctions {
 
 
     public static Direction getDirection(Location startLocation, Location endLocation){
-        if(endLocation.column() == startLocation.column() + 1){
+        if(endLocation.column() > startLocation.column()){
             return Direction.Right;
         }
-        else if(endLocation.column() == startLocation.column() - 1){
+        if(endLocation.column() < startLocation.column() ){
             return Direction.Left;
         }
-        else if(endLocation.row() == startLocation.row() - 1){
+        if(endLocation.row() < startLocation.row() ){
             return Direction.Up;
         }
-        else{
-            return Direction.Down;
-        }
+        return Direction.Down;
+
 
     }
 
